@@ -10,7 +10,7 @@ Template for advanced systems using Yii2 technologies, It counts with user admin
 
 2. Init the configurations file running the command `php init`, then choose the environment dev or prod and generate the config files
 
-3. Pleas create your database and configure the params in `common/config/main-local.php`
+3. Please create your database and configure the params in `common/config/main-local.php`
 
 4. Run the migrations using `php yii migrate`
 
