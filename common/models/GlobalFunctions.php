@@ -2,9 +2,9 @@
 
 namespace common\models;
 
+use Yii;
 use backend\models\i18n\Language;
 use backend\models\settings\Setting;
-use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -16,6 +16,11 @@ class GlobalFunctions
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const KEY_ENCRYPT_DECRYPT = 'key2020';
+
+    public static function generateRandomString($length = 32)
+    {
+        return Yii::$app->security->generateRandomString($length);
+    }
 
     /**
      * @return string
@@ -380,11 +385,173 @@ class GlobalFunctions
         }
 
         // check if file can be deleted on server
-        if (!unlink($url_path)) {
+        try{
+            if (!unlink($url_path)) {
+                return false;
+            }
+        }catch (\Exception $exception){
+            Yii::info("Error deleting image on GlobalFunction: " . $url_path);
+            Yii::info($exception->getMessage());
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Función para devolver la configuración del FileInput
+     *
+     * @return array
+     */
+    public static function getOptionsFileInput($preview, $extensions=[])
+    {
+        return [
+            'allowedFileExtensions'=>(isset($extensions) && !empty($extensions))? $extensions : GlobalFunctions::getImageFormats(),
+            'showPreview' => true,
+            'defaultPreviewContent'=> $preview,
+            'showUpload'=> false,
+            'layoutTemplates'=> [
+                'main1'=>  '{preview}<div class=\'input-group {class}\'><div class=\'input-group-btn\'>{browse}</div>{caption}</div>',
+            ],
+            'fileActionSettings' => [
+                'showDrag' => false,
+                'showZoom' => true,
+                'showUpload' => false,
+                'showDelete' => false,
+                'showView' => false,
+            ],
+        ];
+
+    }
+
+    /**
+     * Returns an array to configure a preview for kartik FileInput widget using audio, video, img
+     * renders according to it extension, other wise render an icon preview
+     * @param $path string relative path to file to render
+     * @param $name string Name to show in caption
+     * @param $options array using custom options for render html tag for preview
+     * @return array
+     */
+    public static function getConfigFileInputWithPreview($path, $name, $extensions=[], $options=[])
+    {
+        return self::getOptionsFileInput(self::renderPreviewForm($path, $name, $options), $extensions);
+    }
+
+    /**
+     * Render a preview for file using audio, video, img in grids or index
+     * renders according to it extension, other wise render an icon preview
+     * @param $path string relative path to file to render
+     * @param $name string Name to show in caption
+     * @param $options array using custom options for render html tag for preview
+     * @return string
+     */
+    public static function renderPreviewForIndex($path, $name, $options=[])
+    {
+        return self::renderPreview($path, $name, true, $options);
+    }
+
+    /**
+     * Render a preview for kartik FileInput widget using audio, video, img
+     * renders according to it extension, other wise render an icon preview
+     * @param $path string relative path to file to render
+     * @param $name string Name to show in caption
+     * @param $options array using custom options for render html tag for preview
+     * @return string
+     */
+    public static function renderPreviewForm($path, $name, $options=[]){
+        return self::renderPreview($path, $name, false, $options);
+    }
+
+    /**
+     * Render a preview for file using audio, video, img
+     * renders according to it extension, other wise render an icon preview
+     * @param $path string relative path to file to render
+     * @param $name string Name to show in caption
+     * @param $isForIndex boolean true if is for Index row, false for forms preview
+     * @param $options array using custom options for render html tag for preview
+     * @return string
+     */
+    private static function renderPreview($path, $name, $isForIndex=false, $options=[])
+    {
+        if(isset($name, $path) && !empty($name) && !empty($path))
+        {
+            $icon = 'fa fa-file-o text-danger';
+            $explode = explode('.',$path);
+            $ext = end($explode);
+            $filename = $name . "." . $ext;
+
+            if(ArrayHelper::isIn($ext, GlobalFunctions::getImageFormats())){
+                $localOptions = $isForIndex ? [
+                    'width' => '100px',
+                    'height' => '100%',
+                ] : [];
+                if(isset($options) && !empty($options)){
+                    $options = array_merge($localOptions, $options);
+                }
+                $preview = Html::img("/{$path}", array_merge(['class' => 'previewAvatar'],$options));
+            } else if(ArrayHelper::isIn($ext, GlobalFunctions::getAudioFormats())){
+                $localOptions = [
+                    'width' => 320,
+                    'height' => 25,
+                    'controls' => 'controls'
+                ];
+                if(isset($options) && !empty($options)){
+                    $options = array_merge($localOptions, $options);
+                }
+                return Html::tag("audio", "<source src='/{$path}' type='audio/{$ext}'/>", $options);
+            }
+            else if(ArrayHelper::isIn($ext, GlobalFunctions::getVideoFormats())){
+                $localOptions = [
+                    'width' => 320,
+                    'height' => 240,
+                    'controls' => 'controls'
+                ];
+                if(isset($options) && !empty($options)){
+                    $options = array_merge($localOptions, $options);
+                }
+                return Html::tag("video", "<source src='/{$path}' type='video/{$ext}'/>", $options);
+            }else {
+                //Define icon by extension
+                if($ext == 'pdf'){
+                    $icon= 'fa fa-file-pdf-o text-danger';
+                }
+                if(ArrayHelper::isIn($ext, GlobalFunctions::getWordFormats())){
+                    $icon= 'fa fa-file-word-o text-primary';
+                }
+                if(ArrayHelper::isIn($ext, GlobalFunctions::getExcelFormats())){
+                    $icon= 'fa fa-file-excel-o text-success';
+                }
+                if(ArrayHelper::isIn($ext, GlobalFunctions::getPowerPointFormats())){
+                    $icon= 'fa fa-file-powerpoint-o text-warning';
+                }
+                if(ArrayHelper::isIn($ext, GlobalFunctions::getCompressFormats())){
+                    $icon= 'fa fa-file-zip-o text-default';
+                }
+                if(ArrayHelper::isIn($ext, ['apk'])){
+                    $icon= 'fa fa-android text-success';
+                }
+
+                $preview = '
+                <div class="file-preview-frame krajee-default  kv-preview-thumb" data-fileindex="0"  data-template="object" title="'.$filename.'"><div class="kv-file-content">
+                <div class="kv-preview-data file-preview-other-frame" style="'. ($isForIndex ? '':'width:213px;height:160px;').'">
+                <div class="file-preview-other">
+                <span class="file-other-icon"><i class="'.$icon.'" style="'. ($isForIndex ? 'font-size: 9rem;' : '') .'"></i></span>
+                </div>
+                </div>
+                </div><div class="file-thumbnail-footer">
+                    <div class="file-footer-caption" title="'.$filename.'">
+                        <div class="file-caption-info">'.$filename.'</div>
+                    </div>
+                </div>
+                </div>';
+            }
+
+            return $preview;
+        }
+        else
+        {
+            return Html::img(self::getNoImageDefaultUrl(),['class'=>'previewAvatar']);
+        }
     }
 
     /**  END - FILE UPLOADS FUNCTIONS  */
@@ -722,32 +889,32 @@ class GlobalFunctions
         }
     }
 
-    /**
-     * Función para devolver la configuración del FileInput
-     *
-     * @return array
-     */
-    public static function getOptionsFileInput($preview)
-    {
-        return [
-            'allowedFileExtensions' => self::getImageFormats(),
-            'defaultPreviewContent' => '<img src="' . $preview . '" class="previewAvatar">',
-            'showUpload' => false,
-            'fileActionSettings' => [
-                'showDrag' => false,
-                'showZoom' => true,
-                'showUpload' => false,
-                'showDelete' => false,
-                'showView' => false,
-            ],
-            'browseLabel' => '',
-            'removeLabel' => '',
-            'layoutTemplates' => [
-                'main1' => '{preview}<div class=\'input-group {class}\'><div class=\'input-group-btn\'>{browse}{upload}{remove}</div>{caption}</div>',
-            ]
-        ];
-
-    }
+//    /**
+//     * Función para devolver la configuración del FileInput
+//     *
+//     * @return array
+//     */
+//    public static function getOptionsFileInput($preview)
+//    {
+//        return [
+//            'allowedFileExtensions' => self::getImageFormats(),
+//            'defaultPreviewContent' => '<img src="' . $preview . '" class="previewAvatar">',
+//            'showUpload' => false,
+//            'fileActionSettings' => [
+//                'showDrag' => false,
+//                'showZoom' => true,
+//                'showUpload' => false,
+//                'showDelete' => false,
+//                'showView' => false,
+//            ],
+//            'browseLabel' => '',
+//            'removeLabel' => '',
+//            'layoutTemplates' => [
+//                'main1' => '{preview}<div class=\'input-group {class}\'><div class=\'input-group-btn\'>{browse}{upload}{remove}</div>{caption}</div>',
+//            ]
+//        ];
+//
+//    }
 
     /***********************
      *  Extensions section *
