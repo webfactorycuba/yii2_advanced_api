@@ -24,6 +24,9 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use backend\models\BaseModel;
 use dosamigos\translateable\TranslateableBehavior;
+use yii\helpers\StringHelper;
+use common\models\GlobalFunctions;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -137,4 +140,41 @@ class <?= $className ?> extends <?= 'BaseModel'. "\n" ?>
         return $this->hasMany(TourLang::className(), ['tour_id' => 'id']);
     }
     */
+
+    /** :::::::::::: START > Abstract Methods and Overrides ::::::::::::*/
+
+    /**
+    * @return string The base name for current model, it must be implemented on each child
+    */
+    public function getBaseName()
+    {
+        return StringHelper::basename(get_class($this));
+    }
+
+    /**
+    * @return string base route to model links, default to '/'
+    */
+    public function getBaseLink()
+    {
+        return "/<?=str_replace("_","-", $tableName);?>";
+    }
+
+    /**
+    * Returns a link that represents current object model
+    * @return string
+    *
+    */
+    public function getIDLinkForThisModel()
+    {
+        $id = $this->getRepresentativeAttrID();
+        if (isset($this->$id)) {
+            $name = $this->getRepresentativeAttrName();
+            return Html::a($this->$name, [$this->getBaseLink() . "/view", 'id' => $this->getId()]);
+        } else {
+            return GlobalFunctions::getNoValueSpan();
+        }
+    }
+
+    /** :::::::::::: END > Abstract Methods and Overrides ::::::::::::*/
+
 }

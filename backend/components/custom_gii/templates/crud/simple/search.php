@@ -4,7 +4,7 @@
  */
 
 use yii\helpers\StringHelper;
-
+use common\models\GlobalFunctions;
 
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\crud\Generator */
@@ -73,6 +73,9 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 
         $this->load($params);
 
+        // descomenta y utiliza tu relación con las traducciones para poder cargar los atributos de traducción
+        // $query->leftJoin('table_lang',"table.id = table_lang.table_id AND table_lang.language='".Yii::$app->language."'");
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -87,8 +90,8 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         if(isset($this->created_at) && !empty($this->created_at))
         {
             $date_explode = explode(' - ',$this->created_at);
-            $start_date = $date_explode[0].' 00:00:00';
-            $end_date = $date_explode[1].' 23:59:59';
+            $start_date = GlobalFunctions::formatDateToSaveInDB($date_explode[0]).' 00:00:00';
+            $end_date = GlobalFunctions::formatDateToSaveInDB($date_explode[1]).' 23:59:59';
 
             $query->andFilterWhere(['>=', 'created_at', $start_date])
                 ->andFilterWhere(['<=', 'created_at', $end_date]);

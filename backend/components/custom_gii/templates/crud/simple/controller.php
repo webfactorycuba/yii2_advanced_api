@@ -132,7 +132,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             }
             catch (Exception $e)
             {
-                GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, a ocurrido una excepción creando el elemento'));
+                GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, ha ocurrido una excepción creando el elemento'));
                 $transaction->rollBack();
             }
         }
@@ -176,7 +176,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 }
                 catch (Exception $e)
                 {
-                    GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, a ocurrido una excepción actualizando el elemento'));
+                    GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, ha ocurrido una excepción actualizando el elemento'));
                     $transaction->rollBack();
                 }
             }
@@ -221,7 +221,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         }
         catch (Exception $e)
         {
-            GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, a ocurrido una excepción eliminando el elemento'));
+            GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, ha ocurrido una excepción eliminando el elemento'));
             $transaction->rollBack();
         }
     }
@@ -322,7 +322,7 @@ if (count($pks) === 1) {
             }
             catch (Exception $e)
             {
-                GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, a ocurrido una excepción eliminando el elemento'));
+                GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, ha ocurrido una excepción eliminando el elemento'));
                 $transaction->rollBack();
             }
 
