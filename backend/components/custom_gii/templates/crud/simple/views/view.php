@@ -82,6 +82,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 
         $name = $column->name;
         $type = $generator->getTableSchema()->columns[$name]->type;
+        $dbtype = $generator->getTableSchema()->columns[$name]->dbType;
 
         $generateselect2 = '';
         if (strlen($name) > 3)
@@ -121,7 +122,17 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 <?php
                 echo "\n";
             }
-            if($column->name === 'photo' || $column->name === 'image')
+            elseif($dbtype === 'boolean' || $dbtype === 'tinyint(1)')
+            {?>
+                [
+                'attribute'=> '<?= $name ?>',
+                'value'=> GlobalFunctions::getStatusValue($model-><?= $name ?>,'true','badge bg-gray'),
+                'format'=> 'html',
+                ],
+                <?php
+                echo "\n";
+            }
+            elseif($column->name === 'photo' || $column->name === 'image')
             {?>
                 [
                     'attribute'=> '<?= $name ?>',

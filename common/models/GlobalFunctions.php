@@ -283,9 +283,9 @@ class GlobalFunctions
     public static function getNoImageDefaultUrl($avatar = false)
     {
         if ($avatar) {
-            $url = Url::to('@web/uploads/avatars/avatar_default.jpg');
+            $url = Url::to('uploads/avatars/avatar_default.jpg');
         } else {
-            $url = Url::to('@web/images/noimage_default.jpg');
+            $url = Url::to('images/noimage_default.jpg');
         }
 
         return $url;
@@ -550,7 +550,7 @@ class GlobalFunctions
         }
         else
         {
-            return Html::img(self::getNoImageDefaultUrl(),['class'=>'previewAvatar']);
+            return Html::img("/" . self::getNoImageDefaultUrl(),['class'=>'previewAvatar']);
         }
     }
 
@@ -721,7 +721,9 @@ class GlobalFunctions
             }
 
             $diff = round($diff);
-            return "<b>" . Yii::t('backend', 'Hace') . ": </b>" . $diff . " " . $strTime[$i] . "(s)";
+
+            $label_time_ago = "</b>" . $diff . " " . $strTime[$i] . "(s)";
+            return "<b>" . Yii::t('backend', "Hace {label_time_ago}",['label_time_ago' => $label_time_ago]);
         }
 
     }
@@ -1114,4 +1116,36 @@ class GlobalFunctions
         echo Html::tag('meta', '', ['name' => 'keywords', 'content' => Setting::getSeoKeywords()]) . "\n    ";
         echo Html::tag('meta', '', ['name' => 'author', 'content' => 'WebFactory (Cuba)']) . PHP_EOL;
     }
+
+    /* BEGIN CUSTOM GROUP PANEL */
+    public static function beginCustomPanel($title,$class = 'box box-primary box-solid') {
+        $html = '
+            <div class="'.$class.'">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        '.$title.'
+                    </h3>
+        
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+        ';
+
+        return $html;
+    }
+
+    public static function endCustomPanel() {
+        $html = '
+                 </div>
+            <!-- /.box-body -->
+        </div>
+        ';
+        return $html;
+    }
+    /* END CUSTOM GROUP PANEL */
 }

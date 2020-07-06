@@ -30,6 +30,12 @@ return [
                 ],
             ],
         ],
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+            'enableSession'=>false,
+            'enableAutoLogin'=>false,
+        ],
         'urlManagerBackend' => [
             'class' => 'yii\web\urlManager',
 			'baseUrl' => 'https://advanced.domain.com', // Real domain

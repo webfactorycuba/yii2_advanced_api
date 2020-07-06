@@ -36,22 +36,26 @@ phpunit.phar
 /.vagrant
 
 # ignore generated files
-/frontend/web/index.php
-/frontend/web/index-test.php
-/frontend/web/robots.txt
-/backend/web/index.php
-/backend/web/index-test.php
-/backend/web/robots.txt
+frontend/web/index.php
+frontend/web/index-test.php
+frontend/web/robots.txt
+backend/web/index.php
+backend/web/index-test.php
+backend/web/robots.txt
 
 # ignore cache assets files
-/frontend/web/assets
-/backend/web/assets
+frontend/web/assets/*
+frontend/runtime/*
+backend/web/assets/*
+backend/runtime/*
+console/runtime/*
 
 # local files
 *-local.php
 
-
 # Keep avatar default
+backend/web/uploads/*
 !backend/web/uploads/avatars/avatar_default.jpg
 !backend/web/uploads/flags/fh7Vv8mukRdvp5qQLgfIQrcM6GMSvfeg.svg
 !backend/web/uploads/flags/O15f8QV2eIskm0tx87ABQ1h_fqKilnIY.svg
+

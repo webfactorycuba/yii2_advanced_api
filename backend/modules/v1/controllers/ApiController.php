@@ -11,7 +11,7 @@ use yii\rest\ActiveController;
 use yii\web\Response;
 
 /**
- * Default controller for the `api` module
+ * Api controller for the `v1` module
  */
 class ApiController extends ActiveController
 {
@@ -69,8 +69,8 @@ class ApiController extends ActiveController
 
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-        header("Allow: GET, POST, OPTIONS");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS");
+        header("Allow: GET, POST, PUT, OPTIONS");
         $method = $_SERVER['REQUEST_METHOD'];
         if($method == "OPTIONS") {
             die();
@@ -84,7 +84,6 @@ class ApiController extends ActiveController
      * @param null $model
      * @param array $params
      * @return bool|User|null|\yii\web\IdentityInterface
-     * @throws \yii\web\ForbiddenHttpException
      */
     public function checkAccess($action, $model = null, $params = [])
     {
@@ -99,22 +98,45 @@ class ApiController extends ActiveController
     {
         $params = Yii::$app->request->post(); // Production mode
 
-        if(!isset($params) || empty($params)){
-            $params = Yii::$app->request->getQueryParams();  //Postman test mode
+        try{
+            $params = array_merge($params, Yii::$app->request->getQueryParams()); //Postman test mode
+        }catch (\Exception $exception){
+            // Query Params is not an array
         }
 
-        if(!isset($params) || empty($params)){
-            $params = Yii::$app->request->getRawBody();  //Postman test mode
-            try{
-                $params = json_decode($params, true);
 
-            }catch (\Exception $e){
-                $params = [];
+        $raw = Yii::$app->request->getRawBody(); //Postman test mode
+        try{
+            $raw = json_decode($raw, true);
+        }catch (\Exception $e){
+            $raw = [];
+        }
+        try{
+            $params = array_merge($params, $raw);
+        }catch (\Exception $exception){
+            // Raw is not an array
+        }
+
+
+        // Filter XSS Attacks
+        try{
+            foreach ($params as $key=>$value){
+                if(is_array($value)){ // Avoid exception for purifier array
+                    foreach ($value as $key2=>$value2){
+                        if(!is_array($value)){
+                            $value[$key2] = HtmlPurifier::process($value2);
+                        }
+                    }
+                    $params[$key] = $value;
+                }else{
+                    $params[$key] = HtmlPurifier::process($value);
+                }
+
             }
+        }catch (\Exception $exception){
+            Yii::error($exception->getMessage(), "WebFactory");
         }
-        if(!isset($params) || empty($params)){
-            $params = [];
-        }
+
 
         return $params;
     }

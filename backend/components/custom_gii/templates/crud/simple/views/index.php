@@ -124,6 +124,7 @@ echo "
             $format = $generator->generateColumnFormat($column);
             $name = $column->name;
             $type = $generator->getTableSchema()->columns[$name]->type;
+            $dbtype = $generator->getTableSchema()->columns[$name]->dbType;
             $generateselect2 = '';
             if (strlen($name) > 3) {
                 $fieldrelation = substr($name, strlen($name)-3, 3);
@@ -239,12 +240,32 @@ echo "
                                     <?php
                                 }
                                 else
-                                    if($type == 'tinyint(1)' || $name == 'status'){?> <?= "\n" ?>
+                                    if($name == 'status'){?> <?= "\n" ?>
                 [
                     'attribute' => '<?= $name ?>',
                     'format' => 'html',
                     'value' => function ($data) {
                         return GlobalFunctions::getStatusValue($data-><?= $name ?>);
+                    },
+                    'filter' => [
+                        0 =>  Yii::t('backend','Inactivo'),
+                        1 => Yii::t('backend','Activo')
+                    ],
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'------'],
+                ],
+                                    <?php
+                                }
+                                else
+                                    if($dbtype === 'boolean' || $dbtype === 'tinyint(1)'){?> <?= "\n" ?>
+                [
+                    'attribute' => '<?= $name ?>',
+                    'format' => 'html',
+                    'value' => function ($data) {
+                        return GlobalFunctions::getStatusValue($data-><?= $name ?>,'true','badge bg-gray');
                     },
                     'filter' => [
                         0 =>  Yii::t('backend','NO'),
@@ -257,7 +278,7 @@ echo "
                     'filterInputOptions'=>['placeholder'=>'------'],
                 ],
                                         <?php
-                                    }
+                                }
                                 else
                                     if($type == 'date' || $type == 'datetime' || $type == 'timestamp'){?> <?= "\n" ?>
 				[

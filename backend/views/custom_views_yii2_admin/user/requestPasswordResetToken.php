@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="login-box" style="margin: 1% auto !important;">
     <div class="login-logo adjust_logo_image">
-        <h1><?= Setting::getName() ?></h1>
         <img src="<?= Setting::getUrlLogoBySettingAndType(1,1) ?>" alt="" style="max-width: 200px; max-height: 200px">
     </div>
     <!-- /.login-logo -->

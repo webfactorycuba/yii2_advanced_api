@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 
 /**
- * Default controller for the `v1` module
+ * User controller for the `v1` module
  */
 class UserController extends ApiController
 {
@@ -31,17 +31,17 @@ class UserController extends ApiController
     }
 
     /**
-     * Renders the user profile view for the module
+     * Renders the user profile
      * @return array
      * @throws \yii\base\InvalidConfigException
      */
     public function actionProfile()
     {
         return [
-            "status" => "200",
+            "statusCode" => "200",
             "success" => true,
             "message" => Yii::t("backend", "Usuario encontrado"),
-            'user' => User::findOne(Yii::$app->user->getId())->getModelAsJson()
+            'result' => User::findOne(Yii::$app->user->getId())->getModelAsJson()
         ];
     }
 
@@ -61,13 +61,13 @@ class UserController extends ApiController
 
         if ($model->change()) {
             return [
-                "status" => "200",
+                "statusCode" => "200",
                 "success" => true,
                 "message" => Yii::t("backend", "Su contraseña ha sido cambiada correctamente.")
             ];
         } else {
             return [
-                "status" => "422",
+                "statusCode" => "422",
                 "success" => false,
                 "errors" => $model->getErrors(),
                 "message" => Yii::t("backend", "Ha ocurrido un error cambiando la contraseña.")

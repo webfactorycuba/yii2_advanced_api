@@ -16,6 +16,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\HtmlPurifier;
 
 use Yii;
+use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 
 class AuthController extends ApiController
 {
@@ -47,18 +49,12 @@ class AuthController extends ApiController
     /**
      * Allow to generate access token for users
      * @return array
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
     public function actionLogin()
     {
-        if (Yii::$app->request->getIsGet()) {
-            return [
-                "status" => "403",
-                "success" => false,
-                "message" => Yii::t('common', "Método no permitido, utilice el método POST en su lugar.")
-            ];
-        }
-
         $params = $this->getRequestParamsAsArray();
         return $this->loginUser($params);
     }
@@ -68,6 +64,8 @@ class AuthController extends ApiController
      * @param $params
      * @return array
      * @throws \yii\base\InvalidConfigException
+     * @throws NotFoundHttpException
+     * @throws BadRequestHttpException
      */
     private function loginUser($params)
     {
@@ -75,8 +73,6 @@ class AuthController extends ApiController
         if (ArrayHelper::keyExists("username", $params) && ArrayHelper::keyExists("password", $params)) {
             $username = (string)ArrayHelper::getValue($params, 'username');
             $password = (string)ArrayHelper::getValue($params, 'password');
-            $username = HtmlPurifier::process($username);
-            $password = HtmlPurifier::process($password);
 
             if (($user = User::findByUsername($username)) !== null) {
 
@@ -90,14 +86,14 @@ class AuthController extends ApiController
                     Yii::$app->user->logout();
 
                     return [
-                        "status" => "200",
+                        "statusCode" => "200",
                         "success" => true,
                         "message" => Yii::t('backend', 'Usuario autenticado.'),
-                        'user' => $user->getModelAsJson()
+                        'result' => $user->getModelAsJson()
                     ];
                 } else {
                     return [
-                        "status" => "403",
+                        "statusCode" => "403",
                         "success" => false,
                         "errors" => $loginForm->getFirstErrors(),
                         "message" => Yii::t('backend', 'Credenciales inválidas. Si olvidó sus datos restablezca las credenciales en CocoLeads.')
@@ -105,30 +101,24 @@ class AuthController extends ApiController
                 }
 
             } else {
-                return [
-                    "status" => "404",
-                    "success" => false,
-                    "message" => Yii::t('backend', 'Usuario no encontrado.')
-                ];
+                throw new NotFoundHttpException(Yii::t("backend", "Usuario no encontrado."));
             }
         }
 
-        return [
-            "status" => "422",
-            "success" => false,
-            "message" => Yii::t('backend', 'Faltan parámetros para ejecutar la consulta.')
-        ];
+        throw new BadRequestHttpException(Yii::t("backend", "Faltan parámetros para ejecutar la consulta."));
     }
 
     /**
      * Send email for user recovery password
      * @return array
+     * @throws NotFoundHttpException
+     * @throws BadRequestHttpException
      */
     public function actionPasswordRecovery()
     {
         if (($user = $this->validateUser()) != false) {
             return [
-                "status" => "200",
+                "statusCode" => "200",
                 "success" => false,
                 "message" => Yii::t("backend", "Usted ya se encuentra autenticado en el sistema.")
             ];
@@ -139,49 +129,43 @@ class AuthController extends ApiController
         $model = new PasswordResetRequest();
         $model->email = ArrayHelper::getValue($params, "email", null);
 
-        if(User::findByEmail($model->email) !== null){
+        if (User::findByEmail($model->email) !== null) {
             if ($model->sendEmail()) {
                 return [
-                    "status" => "200",
+                    "statusCode" => "200",
                     "success" => true,
                     "message" => Yii::t("backend", "Se enviaron instrucciones a su correo para recuperar la contraseña.")
                 ];
             } else {
-                if(YII_ENV_DEV){
+                if (YII_ENV_DEV) {
                     return [
-                        "status" => "422",
+                        "statusCode" => "400",
                         "success" => false,
                         "token" => User::findByEmail($model->email)->password_reset_token,
                         "message" => Yii::t("backend", "No se pudo enviar el correo.")
                     ];
-                }else{
-                    return [
-                        "status" => "422",
-                        "success" => false,
-                        "message" => Yii::t("backend", "No se pudo enviar el correo.")
-                    ];
+                } else {
+                    throw new BadRequestHttpException(Yii::t("backend", "No se pudo enviar el correo."));
                 }
 
             }
-        }else{
-            return [
-                "status" => "404",
-                "success" => false,
-                "message" => Yii::t("backend", "No se encontró ningún usuario con ese correo.")
-            ];
+        } else {
+            throw new NotFoundHttpException(Yii::t("backend", "No se encontró ningún usuario con ese correo."));
         }
     }
 
     /**
      * Reset user password using confirmation_token and new credentials
      * @return array
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
     public function actionPasswordRecoveryReceive()
     {
         if (($user = $this->validateUser()) != false) {
             return [
-                "status" => "200",
+                "statusCode" => "200",
                 "success" => false,
                 "message" => Yii::t("backend", "Usted ya se encuentra autenticado en el sistema.")
             ];
@@ -198,14 +182,12 @@ class AuthController extends ApiController
             return $this->loginUser(['username' => $user->username, 'password' => $model->password]);
         } else {
             return [
-                "status" => "422",
+                "statusCode" => "422",
                 "success" => false,
                 "errors" => $model->getFirstErrors(),
                 "message" => Yii::t("backend", "Ha ocurrido un error cambiando la contraseña.")
             ];
         }
-
     }
-
 
 }

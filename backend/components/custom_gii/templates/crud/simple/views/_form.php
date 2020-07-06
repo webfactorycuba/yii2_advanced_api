@@ -196,7 +196,7 @@ use yii\helpers\ArrayHelper;<?php echo "\n" ?>
     ?>
     ';
                 }
-                elseif($dbtype == 'tinyint(1)' && $attribute !== 'status') {
+                elseif(($dbtype === 'boolean' || $dbtype == 'tinyint(1)') && $attribute !== 'status') {
                     $fields[] =  '
     <?=
         $form->field($model,"'.$attribute.'")->widget(SwitchInput::classname(), [

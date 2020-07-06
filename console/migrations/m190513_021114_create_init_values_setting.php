@@ -19,17 +19,17 @@ class m190513_021114_create_init_values_setting extends Migration
             $seeting_model = new Setting();
             $seeting_model->id = 1;
             $seeting_model->address = 'Dirección';
-            $seeting_model->email = 'webfactorycuba@gmail.com';
-            $seeting_model->phone= '+53 88888888';
+            $seeting_model->email = 'dev@coco-leads.com';
+            $seeting_model->phone= '+7 977 549 8369';
             $seeting_model->mini_header_logo = null;
             $seeting_model->language = 'es';
-            $seeting_model->name = 'Advanced - API';
+            $seeting_model->name = 'Plantilla Avanzada';
             $seeting_model->seo_keywords = 'Yii2, WebFactory Cuba';
-            $seeting_model->description = 'Descripción en español';
+            $seeting_model->description = 'Plantilla avanzada para sistemas basados en Yii2.';
 
             if($seeting_model->save())
             {
-                echo "      > Setting ES inserted sussessfully.\n";
+                echo "      > Setting ES inserted successfully.\n";
             }
             else
             {
@@ -42,14 +42,14 @@ class m190513_021114_create_init_values_setting extends Migration
             {
                 $english = new SettingLang();
                 $english->setting_id = 1;
-                $english->name = 'Advanced -API';
+                $english->name = 'Advanced Template';
                 $english->seo_keywords = 'Yii2, WebFactory Cuba';
-                $english->description = 'Description in english';
+                $english->description = 'Advanced template for Yii2 Apps.';
                 $english->language = 'en';
 
                 if($english->save())
                 {
-                    echo "      > Setting EN inserted sussessfully.\n";
+                    echo "      > Setting EN inserted successfully.\n";
                 }
                 else
                 {

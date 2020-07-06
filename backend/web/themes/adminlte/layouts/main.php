@@ -96,7 +96,8 @@ else {
 
     <?php
     $this->registerJsFile('@web/js/jquery.slimscroll.min.js');
-    $this->registerJsFile('@web/js/Chart.min.js');
+    $this->registerJsFile('@web/plugins/chartjs-2.9.3/Chart.bundle.min.js');
+    $this->registerJsFile('@web/plugins/chartjs-2.9.3/Chart.min.js');
     $this->registerJsFile('@web/js/demo.js');
     $this->registerJsFile('@web/js/customJS.js');
 

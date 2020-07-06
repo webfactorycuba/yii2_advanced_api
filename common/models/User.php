@@ -274,6 +274,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Generates password hash from password and sets it to the model
      *
      * @param string $password
+     * @throws \yii\base\Exception
      */
     public function setPassword($password)
     {
@@ -285,9 +286,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        $this->auth_key = GlobalFunctions::generateRandomString();
         if($this->isNewRecord){
-            $this->auth_key_test = Yii::$app->security->generateRandomString();
+            $this->auth_key_test = GlobalFunctions::generateRandomString();
         }
     }
 
@@ -453,11 +454,12 @@ class User extends ActiveRecord implements IdentityInterface
 
 	}
 
-	/**
-	 * Process upload of image
-	 *
-	 * @return mixed the uploaded image instance
-	 */
+    /**
+     * Process upload of image
+     *
+     * @return mixed the uploaded image instance
+     * @throws \yii\base\Exception
+     */
 	public function uploadImage() {
 		// get the uploaded file instance. for multiple file uploads
 		// the following data will return an array (you may need to use
@@ -599,18 +601,18 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'id' => $this->id,
             'username'=>$this->username,
-            'auth_key'=>$this->auth_key,
-            'auth_key_test'=>$this->auth_key_test,
-            'name' => isset($this->name) && !empty($this->name)? $this->name : false,
-            'last_name' => isset($this->last_name) && !empty($this->last_name)? $this->last_name : false,
-            'email' => isset($this->email) && !empty($this->email)? $this->email : false,
+            'authKey'=>$this->auth_key,
+            'authKeyTest'=>$this->auth_key_test,
+            'name' => isset($this->name) && !empty($this->name)? $this->name : "",
+            'lastName' => isset($this->last_name) && !empty($this->last_name)? $this->last_name : "",
+            'email' => isset($this->email) && !empty($this->email)? $this->email : "",
             'status' => self::getStatusValue($this->status, true),
             'avatar' => Yii::$app->urlManager->getBaseUrl() . "/" . $this->getImageUrl(),
-            'position' => isset($this->position) && !empty($this->position)? $this->position : false,
-            'seniority' => isset($this->seniority) && !empty($this->seniority)? $this->seniority : false,
-            'skills' => isset($this->skills) && !empty($this->skills)? $this->skills : false,
-            'personal_stuff' => isset($this->personal_stuff) && !empty($this->personal_stuff)? $this->personal_stuff : false,
-            'test_access' => $this->testAccess,
+            'position' => isset($this->position) && !empty($this->position)? $this->position : "",
+            'seniority' => isset($this->seniority) && !empty($this->seniority)? $this->seniority : "",
+            'skills' => isset($this->skills) && !empty($this->skills)? $this->skills : "",
+            'personalStuff' => isset($this->personal_stuff) && !empty($this->personal_stuff)? $this->personal_stuff : "",
+            'testAccess' => $this->testAccess,
         ];
     }
 

@@ -100,7 +100,10 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    //'levels' => ['error', 'warning'],
+                    'logVars' => ['_GET', '_POST'],
+                    'categories' => ['WebFactory'],  // Use you App Short Name
+                    'logFile' => '@runtime/logs/web_factory.log'
                 ],
             ],
         ],
@@ -124,7 +127,7 @@ return [
 //                [
 //                    'class'=> 'yii\rest\UrlRule',
 //                    'controller' => [
-//                          '/v1/controller1',   //Rour rest controllers
+//                          '/v1/controller1',   //Route rest controllers
 //                    ],
 //                    'pluralize' => false,
 //                    'except'=>['action1', 'action2']

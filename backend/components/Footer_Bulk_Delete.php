@@ -6,7 +6,7 @@ use Yii;
 
 class Footer_Bulk_Delete
 {
-    public static function getFooterBulkDelete($url)
+    public static function getFooterBulkDelete($url, $gridId="grid")
     {
 
         $title_box_alert = Yii::t('backend', 'Eliminar seleccionados');
@@ -19,7 +19,7 @@ class Footer_Bulk_Delete
                 
                 function appendBulkDelete(){
                     $('#actionDeleteMultiple').click(function(){
-                        var Ids = $('#grid').yiiGridView('getSelectedRows');
+                        var Ids = $("#{$gridId}").yiiGridView('getSelectedRows');
                         
                         var count_selected = Ids.length;
                         

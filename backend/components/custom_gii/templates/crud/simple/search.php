@@ -68,7 +68,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,<?= (in_array('id', $searchAttributes)) ? "\n            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]\n" : '' ?>
+            'query' => $query,<?= (in_array('id', $searchAttributes)) ? "\n            'sort' => false\n" : '' ?>
         ]);
 
         $this->load($params);

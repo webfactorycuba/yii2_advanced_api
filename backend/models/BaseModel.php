@@ -87,6 +87,24 @@ abstract class BaseModel extends \yii\db\ActiveRecord
 
         return $results;
     }
+
+    /*
+      Example for translations
+
+    public static function getSelectMap($check_status = true)
+    {
+        $query = self::find()->select(['table_name.id', 'table_name_lang.name'])
+            ->joinWith(['tableNameLangs']);
+        if ($check_status) {
+            $query->where(['status' => self::STATUS_ACTIVE]);
+        }
+        $models = $query->andFilterWhere(['table_name_lang.language' => Yii::$app->language])->asArray()->all();
+
+        return ArrayHelper::map($models, 'id', 'name');
+    }
+
+    */
+
     /** :::::::::::: END > Util Gets ::::::::::::*/
 
     /** :::::::::::: START > Abstract Methods and Overrides ::::::::::::*/

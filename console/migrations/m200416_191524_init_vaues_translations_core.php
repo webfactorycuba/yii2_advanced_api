@@ -262,6 +262,7 @@ class m200416_191524_init_vaues_translations_core extends Migration
             [251,	'backend',	'descarga', "download"],
             [252,	'backend',	'Semana', "Week"],
             [253,	'backend',	'SEO', "SEO"],
+            [254,	'backend',	'Error, ha ocurrido una excepción eliminando el elemento', "Error, has occurred an exception deleting the element"],
         ];
 
         echo "   > Inserting translations into SourceMessage and Message table.\n";
@@ -289,7 +290,7 @@ class m200416_191524_init_vaues_translations_core extends Migration
 
     public function down()
     {
-        $models = SourceMessage::find()->where('id >= 1 AND id <= 253')->all();
+        $models = SourceMessage::find()->where('id >= 1 AND id <= 254')->all();
 
         if($models)
         {

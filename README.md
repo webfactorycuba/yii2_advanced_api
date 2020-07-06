@@ -1,6 +1,6 @@
 # Advanced API system using Yii2
 
-Template for advanced systems using Yii2 technologies, It counts with user administration and control access, multiple language support and API configurations and user access to endpoints including test token access. 
+Template for advanced systems using Yii2 technologies, It counts with user administration and access control, multiple language support and API configurations and user access to endpoints including test access token. 
 
 # Installation
 

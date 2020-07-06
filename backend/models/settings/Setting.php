@@ -54,7 +54,7 @@ class Setting extends BaseModel
                 ],
                 // use english as fallback for all languages when no translation is available
                 //'fallbackLanguage' => \Yii::$app->language,
-                'fallbackLanguage' => 'es',
+                'fallbackLanguage' => 'en',
             ],
         ];
     }
@@ -397,7 +397,7 @@ class Setting extends BaseModel
      */
     public static function createDefaultSettingByLanguage($language)
     {
-        $model_setting = Setting::findeOne(self::SETTING_ID);
+        $model_setting = Setting::findOne(self::SETTING_ID);
 
         if($model_setting)
         {
@@ -438,7 +438,7 @@ class Setting extends BaseModel
      */
     public static function getEmail()
     {
-        $model = Setting::findeOne(self::SETTING_ID);
+        $model = Setting::findOne(self::SETTING_ID);
 
         if(!$model)
         {

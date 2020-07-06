@@ -14,7 +14,7 @@ use yii\helpers\StringHelper;
 /* @var $properties array list of properties (property => [type, name. comment]) */
 /* @var $labels string[] list of attribute labels (name => label) */
 /* @var $rules string[] list of validation rules */
-/* @var $relations array list of relations (name => relation declaration) */
+
 
 echo "<?php\n";
 ?>
@@ -23,7 +23,6 @@ namespace <?= $generator->ns ?>;
 
 use Yii;
 use backend\models\BaseModel;
-use dosamigos\translateable\TranslateableBehavior;
 use yii\helpers\StringHelper;
 use common\models\GlobalFunctions;
 use yii\helpers\Html;
@@ -40,35 +39,10 @@ use yii\helpers\Html;
  * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
 <?php endforeach; ?>
 <?php endif; ?>
-* @property TourLang[] $translations
+
  */
 class <?= $className ?> extends <?= 'BaseModel'. "\n" ?>
 {
-
-    /**
-    * Para el correcto funcionamiento de las traducciones del modelo se debe ajustar:
-    * 1. @property TourLang[] $translations, ajustar con el modelo de lang
-    * 2. public function behaviors(), ajustar el 'translationAttributes' y colocar los atributos del modeloLang que van a recibir traducción
-    * 3. public function getTranslations(), ajustar el return de esa función, susituir la relaciónn por defecto
-    */
-    public function behaviors()
-    {
-        return [
-            'trans' => [ // name it the way you want
-                'class' => TranslateableBehavior::className(),
-                // in case you named your relation differently, you can setup its relation name attribute
-                //'relation' => 'translations',
-                // in case you named the language column differently on your translation schema
-                //'languageField' => 'language',
-                'translationAttributes' => [
-                    'name',
-                    'description',
-                ],
-                // use english as fallback for all languages when no translation is available
-                'fallbackLanguage' => 'es',
-            ],
-        ];
-    }
 
     /**
      * {@inheritdoc}
@@ -132,14 +106,6 @@ class <?= $className ?> extends <?= 'BaseModel'. "\n" ?>
     }
 
 <?php endif; ?>
-
-    /**
-    * @return \yii\db\ActiveQuery
-    public function getTranslations()
-    {
-        return $this->hasMany(TourLang::className(), ['tour_id' => 'id']);
-    }
-    */
 
     /** :::::::::::: START > Abstract Methods and Overrides ::::::::::::*/
 
