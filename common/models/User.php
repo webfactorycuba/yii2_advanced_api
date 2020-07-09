@@ -42,6 +42,7 @@ class User extends ActiveRecord implements IdentityInterface
     const SCENARIO_RESET_PASSWORD = 'reset_password';
 
     const ROLE_SUPERADMIN = 'Superadmin';
+    const ROLE_BASIC = 'Basic';
 
 	public $fileAvatar;
 	public $switch_status;
