@@ -1,9 +1,10 @@
 <?php
 
 use mdm\admin\components\Helper;
-use dmstr\widgets\Menu;
+//use dmstr\widgets\Menu;
 use backend\models\settings\Setting;
 use common\models\User;
+use backend\widgets\CustomMenu;
 
 ?>
 
@@ -137,11 +138,9 @@ use common\models\User;
                         ],
                     ],
 
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii/default'], 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN) && YII_ENV_DEV],
+                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii/default'], 'target'=>'_blank', 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN) && YII_ENV_DEV],
 
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'], 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN) && YII_ENV_DEV],
-
-
+                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'], 'target'=>'_blank', 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN) && YII_ENV_DEV],
                 ],
             ],
         ];
@@ -150,7 +149,7 @@ use common\models\User;
 
         ?>
 
-        <?= Menu::widget(
+        <?= CustomMenu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => $menu_items
