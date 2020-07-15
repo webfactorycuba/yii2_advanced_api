@@ -45,17 +45,26 @@ backend/web/robots.txt
 
 # ignore cache assets files
 frontend/web/assets/*
-frontend/runtime/*
 backend/web/assets/*
-backend/runtime/*
-console/runtime/*
 
 # local files
-*-local.php
+backend/config/main-local.php
+backend/config/params-local.php
+backend/config/test-local.php
+common/config/main-local.php
+common/config/params-local.php
+common/config/test-local.php
+console/config/main-local.php
+console/config/params-local.php
+console/config/test-local.php
+frontend/config/main-local.php
+frontend/config/params-local.php
+frontend/config/test-local.php
+
+
+# Ignore uploads
+backend/web/uploads/*
 
 # Keep avatar default
-backend/web/uploads/*
 !backend/web/uploads/avatars/avatar_default.jpg
-!backend/web/uploads/flags/fh7Vv8mukRdvp5qQLgfIQrcM6GMSvfeg.svg
-!backend/web/uploads/flags/O15f8QV2eIskm0tx87ABQ1h_fqKilnIY.svg
-
+!backend/web/uploads/flags/*
