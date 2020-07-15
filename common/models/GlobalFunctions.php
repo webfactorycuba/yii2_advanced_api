@@ -12,10 +12,14 @@ use yii\validators\EmailValidator;
 
 class GlobalFunctions
 {
-
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const KEY_ENCRYPT_DECRYPT = 'key2020';
+
+    //Global config that need your attention
+    const BASE_URL = 'http://ctrlx.mo'; // Real Domain
+    const LANGUAGE_COOKIE_KEY = 'lang_cookie_yii'; //To control change languages in system
+    const TIMEZONE = 'America/Havana';
 
     public static function generateRandomString($length = 32)
     {
@@ -37,7 +41,7 @@ class GlobalFunctions
      */
     public static function getCurrentDate($format = null)
     {
-        date_default_timezone_set('America/Havana');
+        date_default_timezone_set(self::TIMEZONE);
 
         if ($format === null)
             $currentDate = date("Y-m-d H:i:s");

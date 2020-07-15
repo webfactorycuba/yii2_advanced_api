@@ -1,6 +1,7 @@
 <?php
 
 use \kartik\datecontrol\Module;
+use common\models\GlobalFunctions;
 
 return [
     'aliases' => [
@@ -11,7 +12,7 @@ return [
     'name'=> 'Advanced Yii2',
     'language' => 'es',
     'sourceLanguage' => 'es',
-    'timeZone' => 'America/Havana',
+    'timeZone' => GlobalFunctions::TIMEZONE,
     'modules' => [
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
@@ -54,7 +55,7 @@ return [
             ],
 
             // set your display timezone
-            'displayTimezone' => 'America/Havana',
+            'displayTimezone' => GlobalFunctions::TIMEZONE,
 
             // set your timezone for date saved to db
             'saveTimezone' => 'UTC',
@@ -111,7 +112,7 @@ return [
 	        ],
         ],
         'formatter' => [
-	        'defaultTimeZone' => 'America/Havana',
+	        'defaultTimeZone' => GlobalFunctions::TIMEZONE,
 	        'dateFormat' => 'php:d-M-Y',
 	        'datetimeFormat' => 'php:d-M-Y h:i A',
 	        'decimalSeparator' => ',',

@@ -2,7 +2,6 @@
 namespace backend\controllers;
 
 use common\models\GlobalFunctions;
-use machour\yii2\notifications\models\Notification;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
@@ -74,7 +73,7 @@ class SiteController extends Controller
 	{
 		\Yii::$app->language = $lang;
 		$cookie = new Cookie([
-		    'name' => 'lang-farming',
+            'name' => GlobalFunctions::LANGUAGE_COOKIE_KEY,
             'value' => $lang,
             'expire' => time() + 60*60*24*30, // 30 days
         ]);

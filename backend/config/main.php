@@ -1,4 +1,7 @@
 <?php
+
+use common\models\GlobalFunctions;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -112,15 +115,15 @@ return [
         ],
 
         'urlManager' => [
-            'baseUrl' => "https://advanced.domain.com",  //Real domain
+            'baseUrl' => GlobalFunctions::BASE_URL,  //Real domain
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
             //'suffix' => '.html',
             'enableStrictParsing' => false,
             'rules' => [
-                '' => 'site/index',
-                '<action>'=>'site/<action>',
+//                '' => 'site/index',
+//                '<action>'=>'site/<action>',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
