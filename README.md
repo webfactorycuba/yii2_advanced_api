@@ -6,16 +6,15 @@ Template for advanced systems using Yii2 technologies, It counts with user admin
 
 *Note: For use next commands you must be in project root folder*
 
-1. Run `composer install` for get vendors files
+* Run `composer install` for get vendors files
 
-2. Init the configurations file running the command `php init`, then choose the environment dev or prod and generate the config files
+* Init the configurations file running the command `php init`, then choose the environment dev or prod and generate the config files
 
-3. Please create your database and configure the params in `common/config/main-local.php`
+* Please create your database and configure the params in `common/config/main-local.php`
 
-4. Run the migrations using `php yii migrate`
+* Run the migrations using `php yii migrate`
 
-5. Configure your vhost to:
-
+* Configure your vhost to:
 ```
 <VirtualHost *:80>
     ServerAdmin webfactorycuba@gmail.com
@@ -31,7 +30,9 @@ Template for advanced systems using Yii2 technologies, It counts with user admin
 </VirtualHost>
 ```
 
-6. Add to your file `etc/hosts` the entry for that domain
+* Add to your file `etc/hosts` the entry for that domain 
+``` 
+127.0.0.1   advanced.domain.local 
 ```
-127.0.0.1   advanced.domain.local
-```
+
+* Please change the global constants (BASE_URL, LANGUAGE_COOKIE_KEY, TIMEZONE) in `common/models/GlobalFunctions.php`
