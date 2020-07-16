@@ -4,9 +4,9 @@ namespace common\models;
 
 use mdm\admin\components\UserStatus;
 use Yii;
-use yii\base\InvalidParamException;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Password reset form
@@ -25,12 +25,12 @@ class ResetPassword extends Model
      *
      * @param  string $token
      * @param  array $config name-value pairs that will be used to initialize the object properties
-     * @throws InvalidParamException if token is empty or not valid
+     * @throws ForbiddenHttpException if token is empty or not valid
      */
     public function __construct($token, $config = [])
     {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException(Yii::t('common', 'El token de restablecimiento de contraseña no puede estar en blanco.'));
+            throw new ForbiddenHttpException(Yii::t('common', 'El token de restablecimiento de contraseña no puede estar en blanco.'));
         }
         // check token
         $class = Yii::$app->getUser()->identityClass ?: 'common\models\User';
@@ -41,7 +41,7 @@ class ResetPassword extends Model
             ]);
         }
         if (!$this->_user) {
-            throw new InvalidParamException(Yii::t('common','Token de restablecimiento de contraseña incorrecto'));
+            throw new ForbiddenHttpException(Yii::t('common','Token de restablecimiento de contraseña incorrecto'));
         }
         parent::__construct($config);
     }
