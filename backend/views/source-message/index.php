@@ -51,13 +51,6 @@ $create_button='';
                 'position'=>'absolute',
                 'top' => 50
             ],
-            'pjax'=>true,
-            'pjaxSettings'=>[
-                'neverTimeout'=>true,
-                'options'=>[
-                    'enablePushState'=>false,
-                ],
-            ],
             'hover' => true,
             'columns' => [
                 $custom_elements_gridview->getSerialColumn(),
