@@ -46,6 +46,9 @@ backend/web/robots.txt
 # ignore cache assets files
 frontend/web/assets/*
 backend/web/assets/*
+backend/runtime/*
+frontend/runtime/*
+console/runtime/*
 
 # local files
 backend/config/main-local.php
