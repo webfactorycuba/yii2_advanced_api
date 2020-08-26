@@ -71,3 +71,4 @@ backend/web/uploads/*
 # Keep avatar default
 !backend/web/uploads/avatars/avatar_default.jpg
 !backend/web/uploads/flags/*
+!*.gitkeep
