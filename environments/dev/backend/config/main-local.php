@@ -1,5 +1,5 @@
 <?php
-use common\models\GlobalFunctions;
+
 $config = [
     'components' => [
         'request' => [
@@ -16,7 +16,7 @@ $config = [
     ],
 ];
 
-$config['components']['urlManager']['baseUrl'] = GlobalFunctions::BASE_URL;
+$config['components']['urlManager']['baseUrl'] = common\models\GlobalFunctions::BASE_URL; //update using local domain
 
 if (!YII_ENV_TEST) {
     // configuration adjustments for 'dev' environment
@@ -24,11 +24,6 @@ if (!YII_ENV_TEST) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
     ];
-
-//    $config['bootstrap'][] = 'gii';
-//    $config['modules']['gii'] = [
-//        'class' => 'yii\gii\Module',
-//    ];
 }
 
 if (YII_ENV_DEV) {

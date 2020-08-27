@@ -1,5 +1,5 @@
 <?php
-use common\models\GlobalFunctions;
+
 $config = [
     'bootstrap' => ['gii'],
     'modules' => [
@@ -7,5 +7,5 @@ $config = [
     ],
 ];
 
-$config['components']['urlManager']['baseUrl'] = GlobalFunctions::BASE_URL;
+$config['components']['urlManager']['baseUrl'] = common\models\GlobalFunctions::BASE_URL; //update using local domain
 return $config;
