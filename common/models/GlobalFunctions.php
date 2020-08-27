@@ -1122,7 +1122,12 @@ class GlobalFunctions
     }
 
     /* BEGIN CUSTOM GROUP PANEL */
-    public static function beginCustomPanel($title,$class = 'box box-primary box-solid') {
+    public static function beginCustomPanel($title, $collapseDefault = false, $class = 'box box-primary box-solid') {
+        $collapseIcon = 'fa-minus';
+        if($collapseDefault){
+            $class .= ' collapsed-box';
+            $collapseIcon = 'fa-plus';
+        }
         $html = '
             <div class="'.$class.'">
                 <div class="box-header with-border">
@@ -1131,7 +1136,7 @@ class GlobalFunctions
                     </h3>
         
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa '. $collapseIcon .'"></i>
                         </button>
                     </div>
                     <!-- /.box-tools -->

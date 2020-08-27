@@ -46,6 +46,9 @@ backend/web/robots.txt
 # ignore cache assets files
 frontend/web/assets/*
 backend/web/assets/*
+backend/runtime/*
+frontend/runtime/*
+console/runtime/*
 
 # local files
 backend/config/main-local.php
@@ -68,3 +71,4 @@ backend/web/uploads/*
 # Keep avatar default
 !backend/web/uploads/avatars/avatar_default.jpg
 !backend/web/uploads/flags/*
+!*.gitkeep

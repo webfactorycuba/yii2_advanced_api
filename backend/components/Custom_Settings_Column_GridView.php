@@ -175,5 +175,12 @@ class Custom_Settings_Column_GridView
         return $this->toolbar;
     }
 
+    /**
+     * @param array $toolbar
+     */
+    public function setToolbar($toolbar)
+    {
+        $this->toolbar = $toolbar;
+    }
 
 }
