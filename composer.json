@@ -1,16 +1,14 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Project Template",
-    "keywords": ["yii2", "framework", "advanced", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "webfactory/yii2_advanced_api",
+    "description": "Advanced API system using Yii2",
+    "keywords": ["yii2", "WebFactory", "advanced", "project template"],
+    "homepage": "http://www.advanced.domain.com/",
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "Apache License",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/webfactorycuba/yii2_advanced_api/issues?state=open",
+        "wiki": "https://github.com/webfactorycuba/yii2_advanced_api/wiki/",
+        "source": "https://github.com/webfactorycuba/yii2_advanced_api"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
