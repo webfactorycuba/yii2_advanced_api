@@ -7,7 +7,7 @@ Template for advanced systems using Yii2 technologies, It counts with user admin
 ### Pre-requirement
 Be sure to have installed globally the asset plugin:
 ```
-    composer global require "fxp/composer-asset-plugin:^1.4.1"`
+    composer global require "fxp/composer-asset-plugin:^1.4.1"
 ```
 
 ### Follow next steps
