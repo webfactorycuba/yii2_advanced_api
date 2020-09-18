@@ -2,6 +2,7 @@
 
 namespace backend\modules\v1\controllers;
 
+use backend\models\support\ApiRequestLog;
 use common\models\User;
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
@@ -137,13 +138,14 @@ class ApiController extends ActiveController
             Yii::error($exception->getMessage(), "WebFactory");
         }
 
-
+        $this->saveRequestLog($params);
         return $params;
     }
 
     /**
      * Return the access token provided by request
      * @return array|mixed|string
+     * @throws \Exception
      */
     private function getAccessToken()
     {
@@ -188,6 +190,37 @@ class ApiController extends ActiveController
         }
 
         return false;
+    }
+    /**
+     * Save a log of any request via API
+     * @param $params array
+     */
+    private function saveRequestLog($params)
+    {
+        if(!empty($params)){
+            $body = json_encode($params);
+        }else{
+            $body = "{}";
+        }
+
+        if(Yii::$app->request->headers->getCount()> 0){
+            $headersArray = [];
+            foreach (Yii::$app->request->headers->getIterator() as $item=>$value){
+                $headersArray[$item]=$value;
+            }
+            $headers = json_encode($headersArray);
+        }else{
+            $headers = "{}";
+        }
+
+        $model = new ApiRequestLog();
+        $model->headers = $headers;
+        $model->body = $body;
+        $model->action_id = $this->action->uniqueId;
+        $model-> method = Yii::$app->request->getMethod();
+        $model->ip = Yii::$app->request->getUserIP();
+        $model->user_agent = Yii::$app->request->getUserAgent();
+        $model->save();
     }
     
 }

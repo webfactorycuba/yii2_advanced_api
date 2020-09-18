@@ -105,7 +105,11 @@ use backend\widgets\CustomMenu;
                         'icon' => 'line-chart',
                         'url' => ['/cronjob-log/index'],
                     ],
-
+                    [
+                        'label' => Yii::t("backend", "Trazas API"),
+                        'icon' => 'line-chart',
+                        'url' => ['/api-request-log/index'],
+                    ],
                 ],
             ],
 
