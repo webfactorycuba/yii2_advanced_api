@@ -79,7 +79,7 @@ class SiteController extends Controller
         ]);
 		\Yii::$app->getResponse()->getCookies()->add($cookie);
 
-		return $this->redirect([''.$url.'']);
+        return $this->redirect($url);
 	}
 
     public function actionCkeditorupload()
