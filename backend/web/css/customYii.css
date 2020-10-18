@@ -207,3 +207,9 @@ li.select2-selection__choice{
     word-break: break-word;
 }
 
+.treeview-menu > li > a {
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-word;
+}
+
