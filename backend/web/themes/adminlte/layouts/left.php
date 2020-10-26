@@ -142,6 +142,8 @@ use backend\widgets\CustomMenu;
                         ],
                     ],
 
+                    ['label' => 'Phpinfo', 'icon' => 'info-circle', 'url' => ['/site/phpinfo'], 'target'=>'_blank', 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN)],
+
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii/default'], 'target'=>'_blank', 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN) && YII_ENV_DEV],
 
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'], 'target'=>'_blank', 'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN) && YII_ENV_DEV],

@@ -24,7 +24,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout', 'index', 'error','change_lang', "ckeditorupload",'info_test'],
+                        'actions' => ['logout', 'index', 'error','change_lang', "ckeditorupload",'phpinfo'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -127,7 +127,7 @@ class SiteController extends Controller
         }
     }
 
-    public function actionInfo_test()
+    public function actionPhpinfo()
     {
         return $this->render('phpinfo');
     }
