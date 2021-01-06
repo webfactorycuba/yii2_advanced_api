@@ -5,6 +5,37 @@ use Yii;
 use yii\base\Model;
 
 /**
+ * @SWG\Definition(
+ *   definition="LoginForm",
+ *   type="object",
+ *   required={"username", "password"},
+ *   @SWG\Property(property="id", type="integer"),
+ *   @SWG\Property(property="username", type="string"),
+ *   @SWG\Property(property="auth_key", type="string"),
+ *   @SWG\Property(property="auth_key_test", type="string"),
+ *   @SWG\Property(property="name", type="string"),
+ *   @SWG\Property(property="last_name", type="string"),
+ *   @SWG\Property(property="email", type="string"),
+ *   @SWG\Property(property="status", type="string"),
+ *   @SWG\Property(property="avatar", type="string"),
+ *   @SWG\Property(property="position", type="string"),
+ *   @SWG\Property(property="seniority", type="string"),
+ *   @SWG\Property(property="skills", type="string"),
+ *   @SWG\Property(property="personal_stuff", type="string"),
+ *   @SWG\Property(property="test_access", type="boolean")
+ * )
+ *
+ * @SWG\Definition(
+ *   definition="CurrentUser",
+ *   type="object",
+ *   required={"auth_key"},
+ *   allOf={
+ *     @SWG\Schema(ref="#/definitions/LoginForm")
+ *   }
+ * )
+ */
+
+/**
  * Login form
  */
 class LoginForm extends Model

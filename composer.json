@@ -2,7 +2,7 @@
     "name": "webfactory/yii2_advanced_api",
     "description": "Advanced API system using Yii2",
     "keywords": ["yii2", "WebFactory", "advanced", "project template"],
-    "homepage": "http://www.advanced.domain.com/",
+    "homepage": "http://www.advanced.domain.local/",
     "type": "project",
     "license": "Apache License",
     "support": {
@@ -13,8 +13,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.0.28",
-        "yiisoft/yii2": "~2.0.35",
+        "php": ">=7.3.0",
+        "yiisoft/yii2": "~2.0.40",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "mdmsoft/yii2-admin": "^2.0@dev",
@@ -38,7 +38,8 @@
         "kartik-v/yii2-helpers": "dev-master",
         "kartik-v/yii2-validators": "dev-master",
         "kartik-v/yii2-checkbox-x": "dev-master",
-        "kartik-v/yii2-icons": "@dev"
+        "kartik-v/yii2-icons": "@dev",
+        "zircote/swagger-php": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

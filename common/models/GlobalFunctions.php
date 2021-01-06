@@ -17,9 +17,20 @@ class GlobalFunctions
     const KEY_ENCRYPT_DECRYPT = 'key2020';
 
     //Global config that need your attention
-    const BASE_URL = 'https://advanced.domain.com'; // Real Domain
+    const BASE_URL = 'http://advanced.domain.local'; // Real Domain
     const LANGUAGE_COOKIE_KEY = 'lang_cookie_yii'; //To control change languages in system
     const TIMEZONE = 'America/Havana';
+
+    /**
+     * Returns clean domain for a given url
+     * @param string $url
+     * @return mixed
+     */
+    public static function urlToDomain($url="")
+    {
+        $domain = explode('/', preg_replace('/https?:\/\/(www\.)?/', '', $url));
+        return $domain['0'];
+    }
 
     public static function generateRandomString($length = 32)
     {

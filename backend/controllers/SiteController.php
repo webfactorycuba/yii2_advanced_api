@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Cookie;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -24,7 +25,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout', 'index', 'error','change_lang', "ckeditorupload",'phpinfo'],
+                        'actions' => ['logout', 'index', 'error','change_lang', "ckeditorupload",'phpinfo', 'resource', 'docs'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -34,6 +35,20 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                ],
+            ],
+            [
+                'class' => 'yii\filters\ContentNegotiator',
+                'only' => ['docs'],
+                'formats' => [
+                    'application/json' => Response::FORMAT_HTML,
+                ],
+            ],
+            [
+                'class' => 'yii\filters\ContentNegotiator',
+                'only' => ['resource'],
+                'formats' => [
+                    'application/json' => Response::FORMAT_JSON,
                 ],
             ],
         ];
@@ -130,5 +145,22 @@ class SiteController extends Controller
     public function actionPhpinfo()
     {
         return $this->render('phpinfo');
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionDocs()
+    {
+        $this->layout = 'api-doc.php';
+        return $this->render('docs');
+    }
+
+    public function actionResource()
+    {
+        $swagger = \Swagger\scan(['../config', '../routes', '../models', '../../common/models/', '../modules']);
+        return $swagger;
     }
 }

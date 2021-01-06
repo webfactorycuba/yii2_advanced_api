@@ -1,5 +1,24 @@
 <?php
 
+/**
+ * @SWG\Swagger(
+ *   info={
+ *     "title"="REST API",
+ *     "version"="0.0.1"
+ *   },
+ *   host=API_HOST,
+ *   basePath="/v1"
+ * )
+ *
+ * @SWG\SecurityScheme(
+ *   securityDefinition="jwt",
+ *   description="add 'Bearer ' before jwt token",
+ *   type="apiKey",
+ *   in="header",
+ *   name="Authorization"
+ * )
+ */
+
 use common\models\GlobalFunctions;
 
 $params = array_merge(
@@ -8,6 +27,8 @@ $params = array_merge(
     require __DIR__ . '/params.php',
     require __DIR__ . '/params-local.php'
 );
+
+$rules = require(__DIR__ . '/rules.php');
 
 return [
     'id' => 'advanced-backend',
@@ -135,10 +156,18 @@ return [
 //                    'pluralize' => false,
 //                    'except'=>['action1', 'action2']
 //                ],
+                'docs' => 'site/docs',
+                [
+                    'pattern' => 'resource',
+                    'route' => 'site/resource',
+                    'suffix' => '.json'
+                ],
                 [
                     'class'=> 'yii\rest\UrlRule',
+                    //'prefix' => '/api',
                     'controller' => ['/v1/auth'],
                     'pluralize' => false,
+                    'extraPatterns' => $rules,
                 ]
             ]
         ],
