@@ -33,5 +33,42 @@ return [
      *     )
      * )
      */
-    'POST login' => 'auth/login'
+    'POST login' => 'auth/login',
+
+    /**
+     * @SWG\Post(
+     *     path="/auth/password-recovery",
+     *     summary="Recovery password via email",
+     *     tags={"Auth"},
+     *     description="Set a request for email recovery password using token",
+     *     @SWG\Parameter(
+     *         name="email",
+     *         in="formData",
+     *         type="string",
+     *         description="Your email for recovery password",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Action message",
+     *         @SWG\Schema(ref="#/definitions/PasswordResetRequest")
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="ValidateErrorException",
+     *         @SWG\Schema(ref="#/definitions/ErrorValidate")
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Resource not found",
+     *         @SWG\Schema(ref="#/definitions/Not Found")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Unauthorized Validation",
+     *         @SWG\Schema(ref="#/definitions/Unauthorized")
+     *     )
+     * )
+     */
+    'POST password-recovery' => 'auth/password-recovery'
 ];

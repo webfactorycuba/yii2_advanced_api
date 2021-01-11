@@ -165,7 +165,7 @@ return [
                 [
                     'class'=> 'yii\rest\UrlRule',
                     //'prefix' => '/api',
-                    'controller' => ['/v1/auth'],
+                    'controller' => ['/v1/auth', '/v1/user'],
                     'pluralize' => false,
                     'extraPatterns' => $rules,
                 ]

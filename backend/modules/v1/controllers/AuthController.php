@@ -25,7 +25,6 @@ class AuthController extends ApiController
     {
         return [
             'login' => ['POST'],
-            'change-own-password' => ['POST'],
             'password-recovery' => ['POST'],
             'password-recovery-receive' => ['POST'],
         ];
@@ -118,7 +117,7 @@ class AuthController extends ApiController
     {
         if (($user = $this->validateUser()) != false) {
             return [
-                "statusCode" => "200",
+                "statusCode" => "403",
                 "success" => false,
                 "message" => Yii::t("backend", "Usted ya se encuentra autenticado en el sistema.")
             ];

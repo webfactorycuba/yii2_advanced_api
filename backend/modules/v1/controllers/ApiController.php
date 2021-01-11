@@ -181,6 +181,7 @@ class ApiController extends ActiveController
     /**
      * Return user if access token is valid
      * @return bool|null|User|\yii\web\IdentityInterface
+     * @throws \Exception
      */
     public function validateUser()
     {

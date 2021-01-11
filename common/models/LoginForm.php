@@ -26,7 +26,7 @@ use yii\base\Model;
  * )
  *
  * @SWG\Definition(
- *   definition="CurrentUser",
+ *   definition="Profile",
  *   type="object",
  *   required={"auth_key"},
  *   allOf={

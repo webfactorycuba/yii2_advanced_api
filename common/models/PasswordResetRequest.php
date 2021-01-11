@@ -8,6 +8,17 @@ use Yii;
 use yii\base\Model;
 
 /**
+ * @SWG\Definition(
+ *   definition="PasswordResetRequest",
+ *   type="object",
+ *   required={"email"},
+ *   @SWG\Property(property="statusCode", type="integer", default=200, description="Status code"),
+ *   @SWG\Property(property="success", type="boolean", description="Action result"),
+ *   @SWG\Property(property="message", type="string", description="Action message"),
+ * )
+ **/
+
+/**
  * Password reset request form
  */
 class PasswordResetRequest extends Model
