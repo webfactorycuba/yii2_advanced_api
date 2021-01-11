@@ -13,7 +13,9 @@ class SwaggerAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         "swagger/css/index.css",
+        "swagger/css/reset.css",
         "swagger/css/standalone.css",
+        "swagger/css/typography.css",
         "swagger/css/api-explorer.css",
         "swagger/css/api2-explorer.css",
         "swagger/css/core.min.css",
@@ -24,7 +26,7 @@ class SwaggerAsset extends AssetBundle
         "swagger/plugins/codemirror/theme/eclipse.css"
         ];
     public $js = [
-        //"swagger/lib/jquery-1.8.0.min.js",
+        "swagger/lib/jquery-1.8.0.min.js",
         "swagger/lib/jquery.slideto.min.js",
         "swagger/lib/jquery.wiggle.min.js",
         "swagger/lib/jquery.ba-bbq.min.js",
@@ -49,7 +51,7 @@ class SwaggerAsset extends AssetBundle
         "swagger/plugins/codemirror/addon/edit/continuelist.js"
     ];
     public $depends = [
-        'yii\web\YiiAsset',
+        //'yii\web\YiiAsset',
         //'yii\bootstrap\BootstrapAsset',
     ];
 

@@ -6,6 +6,7 @@ use kartik\file\FileInput;
 use dosamigos\ckeditor\CKEditor;
 use backend\models\settings\Setting;
 use common\models\GlobalFunctions;
+use kartik\widgets\SwitchInput;
 
 /* @var $this yii\web\View */
 /* @var $model \backend\models\settings\Setting */
@@ -31,9 +32,18 @@ use common\models\GlobalFunctions;
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+                <?=
+                $form->field($model,"save_api_logs")->widget(SwitchInput::classname(), [
+                    "type" => SwitchInput::CHECKBOX,
+                    "pluginOptions" => [
+                        "onText"=> Yii::t("backend","Si"),
+                        "offText"=> Yii::t("backend","No")
+                    ]
+                ])
+                ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
+                <?= $form->field($model, 'address')->textarea(['rows' => 4]) ?>
             </div>
         </div>
 

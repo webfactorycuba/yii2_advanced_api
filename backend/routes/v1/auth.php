@@ -6,7 +6,7 @@ return [
      *     path="/auth/login",
      *     summary="Login to the application",
      *     tags={"Auth"},
-     *     description="Login to app for get Token access",
+     *     description="Login to app for get Token access, check for `data` object",
      *     @SWG\Parameter(
      *         name="username",
      *         in="formData",

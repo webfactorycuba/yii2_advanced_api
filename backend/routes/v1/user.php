@@ -6,7 +6,7 @@ return [
      *     path="/user/profile",
      *     summary="Authenticated user profile",
      *     tags={"User"},
-     *     description="Get the current user data",
+     *     description="Get the current user data, check for `data` object",
      *     @SWG\Response(
      *         response=200,
      *         description="data user",

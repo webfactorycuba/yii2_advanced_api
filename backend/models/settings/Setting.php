@@ -25,12 +25,15 @@ use yii\web\UploadedFile;
  * @property string $description
  * @property string $main_logo
  * @property string $header_logo
+ * @property int $save_api_logs
  *
  * @property SettingLang[] $settingLangs
  */
 class Setting extends BaseModel
 {
     const SETTING_ID = 1;
+    const SAVE_API_LOGS = 1;
+    const UNSAVE_API_LOGS = 0;
 
     public $file_main_logo;
     public $file_header_logo;
@@ -77,6 +80,7 @@ class Setting extends BaseModel
             [['phone', 'address', 'email', 'seo_keywords', 'mini_header_logo', 'name', 'main_logo', 'header_logo'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['email'], 'email'],
+            [['save_api_logs'], 'integer'],
         ];
     }
 
@@ -99,6 +103,7 @@ class Setting extends BaseModel
             'file_header_logo' => Yii::t('backend', 'Logo de cabecera'),
             'mini_header_logo' => Yii::t('backend', 'Mini logo de cabecera'),
             'file_mini_header_logo' => Yii::t('backend', 'Mini logo de cabecera'),
+            'save_api_logs' => Yii::t("backend", "Guardar peticiones API")
         ];
     }
 
@@ -447,6 +452,23 @@ class Setting extends BaseModel
         else
         {
             return $model->email;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSaveApiLogs()
+    {
+        $model = Setting::findOne(self::SETTING_ID);
+
+        if(!$model)
+        {
+            return false;
+        }
+        else
+        {
+            return $model->save_api_logs == Setting::SAVE_API_LOGS;
         }
     }
 

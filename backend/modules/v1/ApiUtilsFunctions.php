@@ -18,41 +18,44 @@ class ApiUtilsFunctions
 
     /**
      * @param $type
-     * @param $messaje
+     * @param string $message
      * @param $data
      * @return array|string
+     * @throws BadRequestHttpException
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
-    public static function getResponseType($type,$message = '',$data = null)
+    public static function getResponseType($type,$message = '', $data = [])
     {
         $response = '';
 
         if($type === self::TYPE_SUCCESS)
         {
             $response = [
-                'name' => 'Success',
-                'message' => ($message === '')? 'Query success' : $message,
+                'name' => Yii::t("backend", 'Success'),
+                'message' => ($message === '')? Yii::t("backend", 'Query success') : $message,
                 'code' => 1,
                 'status' => 200,
                 'type'=> '',
-                'data' => (isset($data) && !empty($data))? [$data]: [],
+                'data' => (isset($data) && !empty($data))? $data: [],
             ];
         }
         elseif($type === self::TYPE_ERROR)
         {
             $response =  [
-                'name' => 'Error',
-                'message' => ($message === '')? 'Query success with errors' : $message,
+                'name' => Yii::t("backend", 'Error'),
+                'message' => ($message === '')? Yii::t("backend",'Query success with errors') : $message,
                 'code' => 0,
                 'status' => 204,
                 'type'=> '',
-                'data' => (isset($data) && !empty($data))? [$data]: [],
+                'data' => (isset($data) && !empty($data))? $data: [],
             ];
         }
         elseif($type === self::TYPE_INDEX_RESPONSE)
         {
             $response = [
-                'name' => 'Success',
-                'message' => 'Query success',
+                'name' => Yii::t("backend", 'Success'),
+                'message' => Yii::t("backend", 'Query success'),
                 'code' => 1,
                 'status' => 200,
                 'type' => '',

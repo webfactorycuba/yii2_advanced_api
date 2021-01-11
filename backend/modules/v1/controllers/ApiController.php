@@ -2,6 +2,7 @@
 
 namespace backend\modules\v1\controllers;
 
+use backend\models\settings\Setting;
 use backend\models\support\ApiRequestLog;
 use common\models\User;
 use Yii;
@@ -22,14 +23,6 @@ class ApiController extends ActiveController
      * @var string Override in all child controller
      */
     public $modelClass = 'none';
-
-    protected function verbs()
-    {
-        return [
-            'index' => ['GET', 'HEAD'],
-            'view' => ['GET'],
-        ];
-    }
 
     public function beforeAction($action)
     {
@@ -56,22 +49,10 @@ class ApiController extends ActiveController
             'class' => HttpBearerAuth::className(),
         ];
 
-//        $behaviors['corsFilter'] = [
-//            'class' => \yii\filters\Cors::className(),
-//            'cors' => [
-//                'Origin'                           => ["*"],
-//                'Access-Control-Request-Method'    => ['POST', 'GET', 'OPTIONS'],
-//                'Access-Control-Allow-Credentials' => false,
-//                'Access-Control-Max-Age'           => 3600,
-//                'Access-Control-Request-Headers' => ["*"],
-//                'Access-Control-Allow-Origin' => ["*"],
-//            ],
-//        ];
-
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-        header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS");
-        header("Allow: GET, POST, PUT, OPTIONS");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS, DELETE");
+        header("Allow: GET, POST, PUT, OPTIONS, DELETE");
         $method = $_SERVER['REQUEST_METHOD'];
         if($method == "OPTIONS") {
             die();
@@ -85,6 +66,7 @@ class ApiController extends ActiveController
      * @param null $model
      * @param array $params
      * @return bool|User|null|\yii\web\IdentityInterface
+     * @throws \Exception
      */
     public function checkAccess($action, $model = null, $params = [])
     {
@@ -147,7 +129,7 @@ class ApiController extends ActiveController
      * @return array|mixed|string
      * @throws \Exception
      */
-    private function getAccessToken()
+    public function getAccessToken()
     {
         $access_token = Yii::$app->request->headers->get('access_token', null);
         if (!isset($access_token) || empty($access_token)) {
@@ -198,30 +180,32 @@ class ApiController extends ActiveController
      */
     private function saveRequestLog($params)
     {
-        if(!empty($params)){
-            $body = json_encode($params);
-        }else{
-            $body = "{}";
-        }
-
-        if(Yii::$app->request->headers->getCount()> 0){
-            $headersArray = [];
-            foreach (Yii::$app->request->headers->getIterator() as $item=>$value){
-                $headersArray[$item]=$value;
+        if(Setting::getSaveApiLogs()){
+            if(!empty($params)){
+                $body = json_encode($params);
+            }else{
+                $body = "{}";
             }
-            $headers = json_encode($headersArray);
-        }else{
-            $headers = "{}";
-        }
 
-        $model = new ApiRequestLog();
-        $model->headers = $headers;
-        $model->body = $body;
-        $model->action_id = $this->action->uniqueId;
-        $model-> method = Yii::$app->request->getMethod();
-        $model->ip = Yii::$app->request->getUserIP();
-        $model->user_agent = Yii::$app->request->getUserAgent();
-        $model->save();
+            if(Yii::$app->request->headers->getCount()> 0){
+                $headersArray = [];
+                foreach (Yii::$app->request->headers->getIterator() as $item=>$value){
+                    $headersArray[$item]=$value;
+                }
+                $headers = json_encode($headersArray);
+            }else{
+                $headers = "{}";
+            }
+
+            $model = new ApiRequestLog();
+            $model->headers = $headers;
+            $model->body = $body;
+            $model->action_id = $this->action->uniqueId;
+            $model-> method = Yii::$app->request->getMethod();
+            $model->ip = Yii::$app->request->getUserIP();
+            $model->user_agent = Yii::$app->request->getUserAgent();
+            $model->save();
+        }
     }
     
 }

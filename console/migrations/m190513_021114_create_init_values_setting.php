@@ -22,6 +22,7 @@ class m190513_021114_create_init_values_setting extends Migration
             $seeting_model->email = 'dev@coco-leads.com';
             $seeting_model->phone= '+7 977 549 8369';
             $seeting_model->mini_header_logo = null;
+            $seeting_model->save_api_logs = Setting::SAVE_API_LOGS;
             $seeting_model->language = 'es';
             $seeting_model->name = 'Plantilla Avanzada';
             $seeting_model->seo_keywords = 'Yii2, WebFactory Cuba';

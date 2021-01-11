@@ -23,6 +23,7 @@ class m200918_140614_init_values_api_request_log_translations extends Migration
             [323, 'backend', 'Trazas API', "API Logs"],
             [324, 'backend', 'Agente de Usuario', "User Agent"],
             [325, 'backend', 'Traza', "Log"],
+            [326, 'backend', 'Guardar peticiones API', "Save API logs"],
         ];
 
         echo "   > Inserting translations into SourceMessage and Message table.\n";
@@ -50,7 +51,7 @@ class m200918_140614_init_values_api_request_log_translations extends Migration
 
     public function safeDown()
     {
-        $models = SourceMessage::find()->where('id >= 318 AND id <= 325')->all();
+        $models = SourceMessage::find()->where('id >= 318 AND id <= 326')->all();
 
         if($models)
         {

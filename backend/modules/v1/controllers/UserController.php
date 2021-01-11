@@ -2,6 +2,7 @@
 
 namespace backend\modules\v1\controllers;
 
+use backend\modules\v1\ApiUtilsFunctions;
 use common\models\ChangePassword;
 use common\models\User;
 use Yii;
@@ -33,21 +34,40 @@ class UserController extends ApiController
     /**
      * Renders the user profile
      * @return array
-     * @throws \yii\base\InvalidConfigException
+     * @throws \Throwable
+     * @throws \yii\web\BadRequestHttpException
+     * @throws \yii\web\ForbiddenHttpException
+     * @throws \yii\web\NotFoundHttpException
      */
     public function actionProfile()
     {
-        return [
-            "statusCode" => "200",
-            "success" => true,
-            "message" => Yii::t("backend", "Usuario encontrado"),
-            'result' => User::findOne(Yii::$app->user->getId())->getModelAsJson()
-        ];
+        $header = Yii::$app->request->headers->get('authorization', null);
+        if(isset($header) && !empty($header)){
+            $pieces = explode(" ", $header);
+            if(count($pieces) == 2){
+                $model = Yii::$app->user->getIdentity();
+                if($model->getAuthKeyTest() == $pieces[1]){
+                    $model->testAccess = true;
+                }
+                return ApiUtilsFunctions::getResponseType(
+                    ApiUtilsFunctions::TYPE_SUCCESS,
+                    Yii::t("backend", "Usuario encontrado"),
+                    $model->getModelAsJson()
+                );
+            }
+        }
+
+        return ApiUtilsFunctions::getResponseType(
+            ApiUtilsFunctions::TYPE_FORBIDDEN
+        );
     }
 
     /**
      * Allow to change own password for authenticated users
      * @return array
+     * @throws \yii\web\BadRequestHttpException
+     * @throws \yii\web\ForbiddenHttpException
+     * @throws \yii\web\NotFoundHttpException
      */
     public function actionChangeOwnPassword()
     {
@@ -60,18 +80,16 @@ class UserController extends ApiController
         $model->retypePassword = ArrayHelper::getValue($params, "retypePassword", null);
 
         if ($model->change()) {
-            return [
-                "statusCode" => "200",
-                "success" => true,
-                "message" => Yii::t("backend", "Su contraseña ha sido cambiada correctamente.")
-            ];
+            return ApiUtilsFunctions::getResponseType(
+                ApiUtilsFunctions::TYPE_SUCCESS,
+                Yii::t("backend", "Su contraseña ha sido cambiada correctamente.")
+            );
         } else {
-            return [
-                "statusCode" => "422",
-                "success" => false,
-                "errors" => $model->getErrors(),
-                "message" => Yii::t("backend", "Ha ocurrido un error cambiando la contraseña.")
-            ];
+            return ApiUtilsFunctions::getResponseType(
+                ApiUtilsFunctions::TYPE_ERROR,
+                Yii::t("backend", "Ha ocurrido un error cambiando la contraseña."),
+                $model->getFirstErrors()
+            );
         }
     }
 }
