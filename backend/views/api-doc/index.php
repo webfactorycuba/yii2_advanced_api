@@ -23,6 +23,13 @@ $create_button='';
 ?>
 
 <?php
+    $button_swagger = Html::button('<i class="fa fa-file-pdf-o"> </i> '.Yii::t("backend", "Exportar"), [
+        'class' => "btn btn-default margin",
+        'type' => 'button',
+        'data-toggle' => 'modal',
+        'data-target' => '#exportModal'
+    ]);
+
     $button_export = Html::button('<i class="fa fa-file-pdf-o"> </i> '.Yii::t("backend", "Exportar"), [
         'class' => "btn btn-default margin",
         'type' => 'button',

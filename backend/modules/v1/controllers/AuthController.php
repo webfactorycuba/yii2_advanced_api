@@ -14,8 +14,6 @@ use common\models\PasswordResetRequest;
 use common\models\ResetPassword;
 use common\models\User;
 use yii\helpers\ArrayHelper;
-use yii\helpers\HtmlPurifier;
-
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;

@@ -4,7 +4,6 @@ namespace backend\modules\v1\controllers;
 
 use backend\modules\v1\ApiUtilsFunctions;
 use common\models\ChangePassword;
-use common\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 

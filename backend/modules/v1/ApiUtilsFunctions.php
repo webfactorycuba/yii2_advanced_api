@@ -48,7 +48,7 @@ class ApiUtilsFunctions
                 'code' => 0,
                 'status' => 204,
                 'type'=> '',
-                'data' => (isset($data) && !empty($data))? $data: [],
+                'errors' => (isset($data) && !empty($data))? $data: [],
             ];
         }
         elseif($type === self::TYPE_INDEX_RESPONSE)
