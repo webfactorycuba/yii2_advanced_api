@@ -140,10 +140,10 @@ use yii\helpers\ArrayHelper;<?php echo "\n" ?>
                 }
                 elseif($attribute == 'photo' || $attribute == 'document' || $attribute == 'image') {
                     $fields[] =  '
-    <?= 
+    <?=
         $form->field($model, "'.$attribute.'")->widget(FileInput::classname(), [
             "language" => Yii::$app->language,
-            "pluginOptions" => GlobalFunctions::getOptionsFileInput($model->getPreview()),
+            "pluginOptions" => GlobalFunctions::getConfigFileInputWithPreview($model->getImageFile(), $model->id),
         ]);
     ?>
     ';

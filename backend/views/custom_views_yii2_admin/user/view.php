@@ -58,8 +58,8 @@ $controllerId = $this->context->uniqueId . '/';
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="<?= User::getUrlAvatarByActiveUser() ?>" alt="Avatar">
-                        <h3 class="profile-username text-center"><?= User::getFullNameByActiveUser() ?></h3>
+                        <img class="profile-user-img img-responsive img-circle" src="<?= User::getUrlAvatarByUserID($model->id) ?>" alt="Avatar">
+                        <h3 class="profile-username text-center"><?= User::getFullNameByUserId($model->id) ?></h3>
                         <p class="text-muted text-center"><?= $model->position ?></p>
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">

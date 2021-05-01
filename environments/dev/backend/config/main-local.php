@@ -13,6 +13,12 @@ $config = [
                 ],
             ],
         ],
+        'mail' => [
+            'class' => 'backend\mail\CustomMailer',
+            'viewPath' => '@common/mail',
+            'enableSwiftMailerLogging' => true,
+            'useFileTransport' => false,
+        ],
     ],
 ];
 

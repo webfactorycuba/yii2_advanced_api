@@ -172,10 +172,8 @@ return [
             ]
         ],
         'mail' => [
-            'class' => 'backend\mail\CustomMailer',
+            'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
-            'enableSwiftMailerLogging' => true,
-            'useFileTransport' => false,
         ],
     ],
     'as beforeRequest' => [
