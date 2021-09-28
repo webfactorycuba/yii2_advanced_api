@@ -19,7 +19,7 @@
  * )
  */
 
-use common\models\GlobalFunctions;
+use common\models\ConfigServerConstants;
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -136,7 +136,7 @@ return [
         ],
 
         'urlManager' => [
-            'baseUrl' => GlobalFunctions::BASE_URL,  //Real domain
+            'baseUrl' => ConfigServerConstants::BASE_URL_BACKEND,  //Real domain
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
@@ -171,9 +171,15 @@ return [
                 ]
             ]
         ],
+//        'mail' => [
+//            'class' => 'yii\swiftmailer\Mailer',
+//            'viewPath' => '@common/mail',
+//        ],
         'mail' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            'class' => 'backend\mail\CustomMailer',
             'viewPath' => '@common/mail',
+            'enableSwiftMailerLogging' => true,
+            'useFileTransport' => false,
         ],
     ],
     'as beforeRequest' => [

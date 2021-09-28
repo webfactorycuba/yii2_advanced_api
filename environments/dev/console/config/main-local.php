@@ -7,5 +7,5 @@ $config = [
     ],
 ];
 
-$config['components']['urlManager']['baseUrl'] = common\models\GlobalFunctions::BASE_URL; //update using local domain
+$config['components']['urlManager']['baseUrl'] = \common\models\ConfigServerConstants::BASE_URL_BACKEND_LOCAL; //update using local domain
 return $config;

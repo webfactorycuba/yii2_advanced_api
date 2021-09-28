@@ -2,7 +2,7 @@
 
 namespace backend\components;
 
-use common\models\GlobalFunctions;
+use common\models\ConfigServerConstants;
 use yii\base\Behavior;
 use yii\web\Application;
 
@@ -15,9 +15,9 @@ class CheckIfLoggedIn extends Behavior
 
 	public function checkIfLoggedIn ()
 	{
-		if(\Yii::$app->getRequest()->getCookies()->has(GlobalFunctions::LANGUAGE_COOKIE_KEY))
+		if(\Yii::$app->getRequest()->getCookies()->has(ConfigServerConstants::LANGUAGE_COOKIE_KEY_BACKEND))
 		{
-			\Yii::$app->language = \Yii::$app->getRequest()->getCookies()->getValue(GlobalFunctions::LANGUAGE_COOKIE_KEY);
+			\Yii::$app->language = \Yii::$app->getRequest()->getCookies()->getValue(ConfigServerConstants::LANGUAGE_COOKIE_KEY_BACKEND);
 		}
 	}
 }

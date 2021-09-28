@@ -1,7 +1,7 @@
 <?php
 
 use \kartik\datecontrol\Module;
-use common\models\GlobalFunctions;
+use common\models\ConfigServerConstants;
 
 return [
     'aliases' => [
@@ -9,10 +9,10 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'name'=> 'Advanced Yii2',
-    'language' => 'es',
-    'sourceLanguage' => 'es',
-    'timeZone' => GlobalFunctions::TIMEZONE,
+    'name'=> ConfigServerConstants::SITE_NAME,
+    'language' => ConfigServerConstants::DEFAULT_LANGUAGE,
+    'sourceLanguage' => ConfigServerConstants::DEFAULT_LANGUAGE,
+    'timeZone' => ConfigServerConstants::TIMEZONE,
     'modules' => [
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
@@ -55,7 +55,7 @@ return [
             ],
 
             // set your display timezone
-            'displayTimezone' => GlobalFunctions::TIMEZONE,
+            'displayTimezone' => ConfigServerConstants::TIMEZONE,
 
             // set your timezone for date saved to db
             'saveTimezone' => 'UTC',
@@ -112,7 +112,7 @@ return [
 	        ],
         ],
         'formatter' => [
-	        'defaultTimeZone' => GlobalFunctions::TIMEZONE,
+	        'defaultTimeZone' => ConfigServerConstants::TIMEZONE,
 	        'dateFormat' => 'php:d-M-Y',
 	        'datetimeFormat' => 'php:d-M-Y h:i A',
 	        'decimalSeparator' => ',',

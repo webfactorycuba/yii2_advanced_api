@@ -14,7 +14,7 @@ Be sure to have installed globally the asset plugin:
 
 *Note: For use next commands you must be in project root folder*
 
-* Run `composer install` for get vendors files
+* Run `composer install` or `composer update` for get vendors files
 
 * Init the configurations file running the command `php init`, then choose the environment dev or prod and generate the config files
 
@@ -43,4 +43,4 @@ Be sure to have installed globally the asset plugin:
 127.0.0.1   advanced.domain.local 
 ```
 
-* Please change the global constants (BASE_URL, LANGUAGE_COOKIE_KEY, TIMEZONE) in `common/models/GlobalFunctions.php`
+* Please change the configuration of constants in `common/models/ConfigServerConstants.php`

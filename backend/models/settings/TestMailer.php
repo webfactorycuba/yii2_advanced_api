@@ -7,7 +7,7 @@ use yii\base\Model;
 use common\models\GlobalFunctions;
 
 /**
- * ContactForm is the model behind the contact form.
+ * TestMailer is the model behind the contact form.
  */
 class TestMailer extends Model
 {
@@ -39,15 +39,12 @@ class TestMailer extends Model
      */
     public function sendEmail()
     {
-        $email = Setting::getEmail();
         $subject = Yii::t('backend','Mensaje de prueba');
-        $body = Yii::t('backend','Mensaje desde probador de configuración');
 
-        $mailer = Yii::$app->mail->compose()
+        $mailer = Yii::$app->mail->compose(['html' => 'test_message-html'])
             ->setTo($this->email)
-            ->setFrom($email)
-            ->setSubject($subject)
-            ->setTextBody($body);
+            ->setFrom([Setting::getEmail() => Setting::getName()])
+            ->setSubject($subject);
 
         try
         {

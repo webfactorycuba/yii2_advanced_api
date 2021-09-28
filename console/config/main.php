@@ -38,7 +38,7 @@ return [
         ],
         'urlManagerBackend' => [
             'class' => 'yii\web\urlManager',
-			'baseUrl' => common\models\GlobalFunctions::BASE_URL, // Real domain
+			'baseUrl' => \common\models\ConfigServerConstants::BASE_URL_BACKEND, // Real domain
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],

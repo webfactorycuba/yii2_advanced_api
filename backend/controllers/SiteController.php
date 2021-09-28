@@ -1,7 +1,7 @@
 <?php
 namespace backend\controllers;
 
-use common\models\GlobalFunctions;
+use common\models\ConfigServerConstants;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
@@ -88,7 +88,7 @@ class SiteController extends Controller
 	{
 		\Yii::$app->language = $lang;
 		$cookie = new Cookie([
-            'name' => GlobalFunctions::LANGUAGE_COOKIE_KEY,
+            'name' => ConfigServerConstants::LANGUAGE_COOKIE_KEY_BACKEND,
             'value' => $lang,
             'expire' => time() + 60*60*24*30, // 30 days
         ]);

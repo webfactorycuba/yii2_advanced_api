@@ -16,11 +16,6 @@ class GlobalFunctions
     const STATUS_ACTIVE = 1;
     const KEY_ENCRYPT_DECRYPT = 'key2020';
 
-    //Global config that need your attention
-    const BASE_URL = 'http://advanced.domain.local'; // Real Domain
-    const LANGUAGE_COOKIE_KEY = 'lang_cookie_yii'; //To control change languages in system
-    const TIMEZONE = 'America/Havana';
-
     /**
      * Returns clean domain for a given url
      * @param string $url
@@ -52,7 +47,7 @@ class GlobalFunctions
      */
     public static function getCurrentDate($format = null)
     {
-        date_default_timezone_set(self::TIMEZONE);
+        date_default_timezone_set(ConfigServerConstants::TIMEZONE);
 
         if ($format === null)
             $currentDate = date("Y-m-d H:i:s");
