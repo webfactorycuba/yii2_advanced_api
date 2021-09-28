@@ -217,14 +217,14 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             {
                 GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error eliminando el elemento'));
             }
-
-            return $this->redirect(['index']);
         }
         catch (Exception $e)
         {
             GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error, ha ocurrido una excepción eliminando el elemento'));
             $transaction->rollBack();
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
