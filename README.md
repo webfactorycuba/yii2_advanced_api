@@ -44,3 +44,35 @@ Be sure to have installed globally the asset plugin:
 ```
 
 * Please change the configuration of constants in `common/models/ConfigServerConstants.php`
+
+**EXTRAS:**
+
+**To use flash messages:**
+```
+GlobalFunctions::addFlashMessage('success',Yii::t('backend','Success message'));
+GlobalFunctions::addFlashMessage('danger',Yii::t('backend','Error message'));
+GlobalFunctions::addFlashMessage('info',Yii::t('backend','Info message'));
+GlobalFunctions::addFlashMessage('warning',Yii::t('backend','Warning message'));
+```
+
+**i18n Internationalitation**
+If the system includes a frontend, the translations key must be enabled in the ```common/config/main.php``` file.
+```
+'frontend*' => [
+    'class' => 'yii\i18n\DbMessageSource',
+    'forceTranslation' => true
+], 
+```
+
+For the necessary translation texts, the 'backend', 'frontend' or 'common' key must be used and the text must be written in Spanish (the entry for the English language will be created in BD). 
+Example:
+```
+Yii::t('backend','Text')
+Yii::t('common','Text')
+Yii::t('frontend','Text')
+```
+
+Once new translation messages have been defined, they must be extracted for the DB. The command to extract the translations is: 
+```
+yii message/extract @common/config/i18n.php
+```
