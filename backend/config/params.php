@@ -3,7 +3,7 @@
 /**
  * @SWG\Definition(
  *     definition="ErrorValidate",
- *     required={"name", "message", "code", "status", "type", "data"},
+ *     required={"name", "message", "code", "status", "type", "errors"},
  *     type="object",
  *     @SWG\Schema(
  *       @SWG\Property(property="name", type="string", default="Error", description="Action result name"),
@@ -11,7 +11,7 @@
  *       @SWG\Property(property="code", type="integer", default=0, description="Code value"),
  *       @SWG\Property(property="status", type="integer", default=204, description="Http Response Status"),
  *       @SWG\Property(property="type", type="string", description="Query type"),
- *       @SWG\Property(property="data", type="object", description="Errors Detail")
+ *       @SWG\Property(property="errors", type="object", description="Errors Detail")
  *     )
  * )
  *

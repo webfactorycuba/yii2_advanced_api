@@ -148,7 +148,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays about page.
+     * Displays Docs page.
      *
      * @return string
      */
