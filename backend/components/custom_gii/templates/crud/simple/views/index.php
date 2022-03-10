@@ -327,15 +327,22 @@ echo "
                                             <?php
                                         }
                                     else{?><?= "\n" ?>
-				[
-					'attribute'=>'<?= $name ?>',
-					'contentOptions'=>['class'=>'kv-align-left kv-align-middle'],
-					'hAlign'=>'center',
-					'format'=> 'html',
-					'value' => function ($data) {
-						return $data-><?= $name ?>;
-					}
-				],
+                [
+                    'attribute'=>'<?= $name ?>',
+                    'headerOptions' => ['class'=>'custom_width'],
+                    'contentOptions' => ['class'=>'custom_width'],
+                    'hAlign'=>'center',
+                    'format'=> 'html',
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => <?= StringHelper::basename($generator->modelClass) ?>::getFieldLabels('<?= $name ?>'),
+                    'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                    'options' => ['multiple' => false],
+                    ],
+                    'filterInputOptions' => [
+                    'placeholder' => '-----',
+                    ]
+                ],
                                         <?php
                                     }
             }

@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use common\models\GlobalFunctions;
+use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
@@ -139,4 +140,29 @@ abstract class BaseModel extends \yii\db\ActiveRecord
 
     /** :::::::::::: END > Abstract Methods and Overrides ::::::::::::*/
 
+    /**
+     * @param null $value
+     * @return array|mixed
+     */
+    public static function getFieldLabels($field, $value = null, $is_user_field = false) {
+        $array = [];
+        $models = self::find()->all();
+
+        if(isset($models) && !empty($models)) {
+            foreach($models AS $key => $model) {
+                if($is_user_field) {
+                    $name_to_show = User::getFullNameByUserId($model->$field);
+                    $array[$model->$field] = $name_to_show;
+                } else {
+                    $array[$model->$field] = $model->$field;
+                }
+            }
+        }
+
+        if ($value !== null) {
+            return $array[$value];
+        } else {
+            return $array;
+        }
+    }
 }
