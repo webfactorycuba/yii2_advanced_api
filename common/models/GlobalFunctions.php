@@ -638,9 +638,14 @@ class GlobalFunctions
      * @param int $digits
      * @return string
      */
-    public static function formatNumber($number, $digits = 0)
+    public static function formatNumber($number, $digits = 0, $simple_format = false)
     {
-        return number_format($number, $digits, ',', '.');
+        if($simple_format) {
+            return number_format($number, $digits, '.', '');
+        }
+        else {
+            return number_format($number, $digits, ',', '.');
+        }
     }
 
     /**
